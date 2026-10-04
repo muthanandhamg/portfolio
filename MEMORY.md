@@ -4,6 +4,9 @@ Single-page capability portfolio for **Muthanandham Gnanamuthuraj**, DevOps Engi
 Everything ships as one file: `index.html` (~1,790 lines, ~100 KB, no build step, no
 dependencies beyond two Google Fonts).
 
+**Live:** <https://muthanandhamg.github.io/portfolio/> ·
+**Repo:** <https://github.com/muthanandhamg/portfolio>
+
 This document records *why* the page is the way it is — the brief, the decisions, the
 bugs found along the way, and the measured constraints that future edits must respect.
 If you change something here and it looks wrong, the reason is probably below.
@@ -193,6 +196,24 @@ The previous icon used a `1.5` stroke on a `32` viewBox — **0.75px at tab size
 device pixel, so it rendered as an empty square. Measured at true 16×16: lit pixels went
 from **16/256 to 32/256**, with a pure-white centre.
 
+### ADR-020 — Deployed to GitHub Pages from `main`
+**Decision.** Public repo [`muthanandhamg/portfolio`](https://github.com/muthanandhamg/portfolio),
+Pages served from `main` at root, HTTPS enforced.
+
+**Live:** <https://muthanandhamg.github.io/portfolio/>
+
+**Why not `muthanandhamg.github.io`** (the root-domain repo name): that name can only be
+used once per account and was kept free for a future root site. Cost is the `/portfolio`
+subpath.
+
+**Conventions set here, worth keeping.**
+- Commit identity is **repo-local**, not global — this project does not alter the
+  machine's git config.
+- Author email is the GitHub noreply alias
+  `243717282+muthanandhamg@users.noreply.github.com`, so a personal address is never
+  embedded in public commit history.
+- `.claude/` is gitignored: editor dev-server config is tooling, not site content.
+
 ---
 
 ## 3. Defects found and fixed
@@ -243,17 +264,32 @@ which stalls the scroll handler and serves stale style data. Several hours were 
 chasing a "CSS bug" in the toolkit that did not exist. **When the DOM and
 `getComputedStyle` disagree, trust a screenshot.**
 
+**Git and `gh` are not on the default PATH on this machine.** They live at
+`C:\Program Files\Git\cmd` and `C:\Program Files\GitHub CLI`. `gh` shells out to `git`,
+so if `git` is missing from PATH, `gh repo create` fails with the misleading
+*"current directory is not a git repository"* even inside a perfectly valid repo. Both
+must be on PATH **in the same shell invocation** — environment changes do not persist
+between commands here.
+
+A related trap: probing for an executable with `Test-Path` returned false negatives under
+the sandbox, which led to a confident and wrong "git is not installed" conclusion. Both
+Git and the GitHub CLI were present the whole time. **Cross-check with a package query
+(`winget list --id Git.Git -e`) before concluding something is absent.**
+
 ---
 
 ## 6. Not done yet
 
 | Item | State |
 |---|---|
-| **OG image** | Designed and rendered as 1200×630; two variants built (name-led, statement-led). **Not chosen, not wired.** Generator deleted during cleanup — rebuild from the spec below. |
-| **JSON-LD** | `Person` schema drafted (name, jobTitle, email, url, sameAs, alumniOf, knowsAbout). Not added. |
-| **Deployment** | Not hosted. The highest-leverage remaining item: ship it via GitHub Actions and inject the commit SHA into the footer, so the page is *evidence* that the pipeline in Act 04 is real rather than a claim. |
+| **OG image** | Designed and rendered as 1200×630; two variants built (name-led, statement-led). **Not chosen, not wired.** Generator deleted during cleanup — rebuild from the spec below. Now that the site has a real URL, this is the top item: every share of the link currently previews as a blank card. |
+| **JSON-LD** | `Person` schema drafted (name, jobTitle, email, url, sameAs, alumniOf, knowsAbout). Not added. `og:url` should now be set to the live URL. |
+| **SHA in the footer** | A small Actions workflow stamping the deploying commit into the footer would turn Act 04's pipeline from a claim into something a visitor can verify. The connected token already carries the `workflow` scope. |
 | **Evidence artifacts** | Every capability is still an assertion. Two or three real artifacts — a Terraform module, a Jenkinsfile, a Deployment manifest — in a small inline code viewer would be the strongest remaining content addition. |
 | **Contrast pass** | See §4. |
+
+**Done since first draft:** deployment — see ADR-020. The site is live at
+<https://muthanandhamg.github.io/portfolio/>.
 
 **OG card spec (for rebuilding):** 1200×630, `#08090A` ground, deterministic constellation
 at ~78% width behind a left-weighted scrim, `DEVOPS ENGINEER` eyebrow in JetBrains Mono
@@ -267,11 +303,18 @@ Both existing cards read "MUTHANANDHAM G." and must be regenerated with the full
 ## 7. Files
 
 ```
-index.html             the entire site
+index.html             the entire site — this is what Pages serves
 MEMORY.md              this file
-.claude/launch.json    dev-server config for the preview pane (tooling, not shipped)
+.gitignore             excludes .claude/ and OS cruft
+.claude/launch.json    dev-server config for the preview pane (local, gitignored)
 ```
 
 Preview and generator artifacts (`palette-preview.html`, `og-generator.html`,
 `favicon-preview.html`, `og-variant-*.png`) were removed after their decisions were
 recorded here.
+
+**Repo:** <https://github.com/muthanandhamg/portfolio> · `main` · public
+**Live:** <https://muthanandhamg.github.io/portfolio/>
+
+Pages serves `index.html` straight from the repo root, so **a push to `main` is a
+deploy**. There is no build step to break.

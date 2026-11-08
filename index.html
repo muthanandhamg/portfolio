@@ -166,7 +166,11 @@ body[data-health="bad"] #hud .stateval{color:var(--bad)}
 #rail button:hover .lbl{opacity:1;transform:none}
 #rail button[aria-current="true"]{color:var(--hot)}
 #rail button[aria-current="true"] .tick{width:30px;background:var(--hot)}
-#rail button[aria-current="true"] .lbl{opacity:1;transform:none}
+/* The active section is shown by the long white tick. Its label used to stay
+   visible and sat on top of the content column at 1440px, so labels now
+   appear only on hover or keyboard focus. */
+#rail button:focus-visible .lbl{opacity:1;transform:none}
+#rail .lbl{background:var(--bg);padding:2px 6px}
 @media(max-width:900px){#rail{display:none}}
 
 /* ═══════════════════ LAYOUT ═══════════════════ */
@@ -201,7 +205,7 @@ body.js .rv.in{opacity:1;transform:none}
 @media(max-width:640px){ #hero .kicker .role{display:none} }
 #hero h1{
   /* sized to the LONGER line (GNANAMUTHURAJ, 13 chars), not MUTHANANDHAM */
-  font-size:clamp(28px, 10.4vw, 152px);line-height:.88;letter-spacing:-.048em;
+  font-size:clamp(28px, 10.4vw, 152px);line-height:.88;letter-spacing:-.035em;
   font-weight:700;margin:0 0 clamp(26px,4vh,44px);
 }
 #hero h1 .l2{display:block;color:var(--ink-ghost)}
@@ -353,6 +357,7 @@ body.js .rv.in{opacity:1;transform:none}
 .console{
   margin-top:14px;border:1px solid var(--line);background:rgba(12,13,15,.78);backdrop-filter:blur(8px);
   height:clamp(160px,24vh,230px);overflow:hidden;position:relative;
+  display:flex;flex-direction:column;
 }
 .console .bar{
   display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line);
@@ -360,7 +365,7 @@ body.js .rv.in{opacity:1;transform:none}
 }
 .console .bar .dots{display:flex;gap:5px}
 .console .bar .dots i{width:6px;height:6px;border-radius:50%;background:var(--line-2)}
-.console .body{padding:12px 14px;font-family:var(--f-mono);font-size:11.5px;line-height:1.95;color:var(--ink-faint);overflow:hidden}
+.console .body{margin-top:12px;padding:0 14px 12px;position:relative;font-family:var(--f-mono);font-size:11.5px;line-height:1.95;color:var(--ink-faint);overflow:hidden;flex:1;min-height:0}
 .console .ln{display:flex;gap:10px;opacity:0;transform:translateY(3px)}
 .console .ln.on{opacity:1;transform:none;transition:all .2s var(--e-out)}
 .console .ts{color:var(--ink-ghost);flex:none}
@@ -382,7 +387,7 @@ body.js .rv.in{opacity:1;transform:none}
   .stage .nm{font-size:13px}
   .stage .tool{font-size:9.5px}
   .console{height:104px;margin-top:10px}
-  .console .body{font-size:10.5px;line-height:1.8;padding:8px 12px}
+  .console .body{font-size:10.5px;line-height:1.8;margin-top:8px;padding:0 12px 8px}
   .console .src{min-width:58px}
 }
 @media(max-width:520px){
@@ -547,7 +552,7 @@ body.js .rv.in{opacity:1;transform:none}
    not the 172px headline inside it, which clips the statement. The copy
    constrains itself via .say instead. */
 .close-in{text-align:left}
-#contact .big{font-size:clamp(44px,12.4vw,172px);line-height:.88;letter-spacing:-.05em;font-weight:700;margin:0}
+#contact .big{font-size:clamp(44px,11.2vw,164px);line-height:.88;letter-spacing:-.035em;font-weight:700;margin:0}
 #contact .big .dim{display:block;color:var(--ink-ghost)}
 #contact .say{margin-top:clamp(28px,4vh,44px);font-size:clamp(15px,1.3vw,18px);line-height:1.8;color:var(--ink-dim);max-width:46ch}
 .contacts{margin-top:clamp(40px,6vh,68px);border-top:1px solid var(--line);max-width:760px}
@@ -568,7 +573,7 @@ footer{
   font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-ghost);
 }
 footer .grow{flex:1}
-footer button{color:var(--ink-ghost);letter-spacing:.14em;text-transform:uppercase;font-family:var(--f-mono);font-size:10.5px}
+footer button{color:var(--ink-ghost);letter-spacing:.14em;text-transform:uppercase;font-family:var(--f-mono);font-size:10.5px;padding:15px 8px;margin:-15px -8px}
 footer button:hover{color:var(--ink-2)}
 
 /* ═══════════════════ TOAST ═══════════════════ */
@@ -868,7 +873,7 @@ body.nomotion .scrollhint{display:none}
   <div class="wrap">
     <div class="eyebrow rv"><span class="num">07</span><span>toolkit</span></div>
     <h2 class="rv d1">A tool is not a skill. <span class="dim">It's an answer to a question.</span></h2>
-    <p class="tk-sub rv d2">Pick a capability and watch only the tools that serve it stay lit — then hover any tool to see what I actually use it for.</p>
+    <p class="tk-sub rv d2">Pick a capability and watch only the tools that serve it stay lit — then tap or hover any tool to see what I actually use it for.</p>
 
     <div class="reactor rv d3">
       <div class="rx-caps" id="rxCaps">
@@ -876,7 +881,7 @@ body.nomotion .scrollhint{display:none}
       </div>
       <div class="rx-field">
         <div class="rx-tools" id="rxTools"></div>
-        <div class="rx-detail mono" id="rxDetail"><span class="ar">›</span> hover a tool for its job on the team.</div>
+        <div class="rx-detail mono" id="rxDetail"><span class="ar">›</span> tap or hover a tool for its job on the team.</div>
         <div class="rx-count" id="rxCount"></div>
       </div>
     </div>
@@ -1086,7 +1091,7 @@ var DOMAINS = [
     env:'platform services · data & messaging',
     nm:'Supporting Services',
     ds:'The services the telemetry flows through: messaging, time-series and document storage, a graph database, durable workflows and identity. They run as Docker containers on dedicated EC2 instances and as pods on Amazon EKS.',
-    sig:['<span>messaging</span> rabbitmq','<span>data</span> influxdb · mongodb · neo4j','<span>workflows · auth</span> temporal · keycloak','<span>runtime</span> docker · ec2 · eks']
+    sig:['<span>messaging</span> rabbitmq','<span>data</span> influxdb · mongodb · neo4j','<span>workflows</span> temporal','<span>auth</span> keycloak','<span>runtime</span> docker · ec2 · eks']
   },
   {
     env:'application delivery · environments',
@@ -1629,18 +1634,15 @@ function updatePipeline(pp){
   for (var l=0;l<pipeLogEls.length;l++){
     pipeLogEls[l].classList.toggle('on', pp >= PIPE_LOG[l].at);
   }
-  /* keep the newest line in view — measured, not assumed */
-  var body = $('#pipeLog');
-  var visible = 0;
-  for (var v=0;v<PIPE_LOG.length;v++){ if (pp >= PIPE_LOG[v].at) visible++; }
-  if (pipeLogEls.length){
-    var lineH = pipeLogEls[0].offsetHeight || 22;
-    var shell = body.parentElement;                 /* .console */
-    var bar   = shell.querySelector('.bar');
-    var room  = shell.clientHeight - (bar ? bar.offsetHeight : 0) - 24;
-    var maxLines = Math.max(1, Math.floor(room / lineH));
-    var shift = Math.max(0, visible - maxLines) * lineH;
-    body.style.transform = 'translateY(' + (-shift) + 'px)';
+  /* keep the newest visible line in view — measured per line, because on a
+     phone long lines wrap and are taller than one row */
+  var body = $('#pipeLog'), lastOn = null;
+  for (var v=0;v<pipeLogEls.length;v++){ if (pp >= PIPE_LOG[v].at) lastOn = pipeLogEls[v]; }
+  if (lastOn){
+    var padB = parseFloat(getComputedStyle(body).paddingBottom) || 0;
+    body.scrollTop = Math.max(0, lastOn.offsetTop + lastOn.offsetHeight + padB - body.clientHeight);
+  } else {
+    body.scrollTop = 0;
   }
 
   if (idx !== lastPipeStage){
@@ -1828,6 +1830,7 @@ var INC = (function(){
   return {
     init: function(){
       sizeChart(); seed(); drawChart();
+      pushLog([{ t:'03:14:02', m:'watching deploy/telemetry-ingest · nothing to report yet' }]);
       apply(0);
       btnLabel.textContent = INCIDENT[1].label;
       window.addEventListener('resize', function(){ sizeChart(); drawChart(); });
@@ -1862,7 +1865,7 @@ var INC = (function(){
 
   function clearLit(){
     toolBtns.forEach(function(b){ b.classList.remove('lit','sel'); });
-    detail.innerHTML = '<span class="ar">›</span> hover a tool for its job on the team.';
+    detail.innerHTML = '<span class="ar">›</span> tap or hover a tool for its job on the team.';
   }
 
   capBtns.forEach(function(b){

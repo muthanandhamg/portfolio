@@ -885,7 +885,7 @@ body.nomotion .scrollhint{display:none}
   <div class="wrap">
     <div class="eyebrow rv"><span class="num">08</span><span>where it ran</span></div>
     <h2 class="rv d1">Systems where the physical world <span class="dim">was on the other end.</span></h2>
-    <p class="dm-sub rv d2">Not a job history — the kinds of platforms these capabilities were built against. When a vehicle or a tank is the client, "it's down" isn't an abstraction.</p>
+    <p class="dm-sub rv d2">The platform I work on as part of the Hash8.io team, described as a system. When equipment in the field is the client, &ldquo;it&rsquo;s down&rdquo; isn&rsquo;t an abstraction.</p>
     <div class="domlist" id="domlist"></div>
   </div>
 </section>
@@ -1074,22 +1074,22 @@ var PRINCIPLES = [
 
 var DOMAINS = [
   {
-    env:'industrial iot · telemetry',
-    nm:'Smart Tank Monitoring & Telemetry',
-    ds:'Sensors reporting from tanks in the field, continuously, whether or not anyone is watching. Ingest services and processing workloads containerised onto EKS, provisioned with Terraform, with Prometheus, Grafana and CloudWatch watching both the platform and the devices feeding it.',
-    sig:['<span>workload</span> containerised microservices','<span>orchestration</span> kubernetes / amazon eks','<span>signal</span> prometheus · grafana · elk','<span class="g">state</span> <span class="g">running</span>']
+    env:'industrial iot · team platform',
+    nm:'AssetIQ — Industrial IoT Telemetry Platform',
+    ds:'A multi-application platform that collects and processes telemetry from industrial devices in the field. One platform behind five applications: ReeferiQ, LiftiQ, TankiQ, FlowiQ and CloudiQ. I work on it as a member of the Hash8.io engineering team.',
+    sig:['<span>apps</span> reeferiq · liftiq · tankiq','<span>apps</span> flowiq · cloudiq','<span>cloud</span> aws','<span class="g">state</span> <span class="g">running</span>']
   },
   {
-    env:'automotive iot · connected vehicle',
-    nm:'Connected Vehicle & Fleet Management',
-    ds:'Vehicles as clients. Telemetry arriving from a moving fleet, with device management and data processing services behind it. Rolling deployments and health checks automated so a release never becomes a gap in a fleet’s data.',
-    sig:['<span>delivery</span> jenkins · github · docker','<span>infra</span> ec2 · vpc · iam · s3 · eks','<span>rollout</span> rolling update · health-gated','<span class="g">state</span> <span class="g">running</span>']
+    env:'platform services · data & messaging',
+    nm:'Supporting Services',
+    ds:'The services the telemetry flows through: messaging, time-series and document storage, a graph database, durable workflows and identity. They run as Docker containers on dedicated EC2 instances and as pods on Amazon EKS.',
+    sig:['<span>messaging</span> rabbitmq','<span>data</span> influxdb · mongodb · neo4j','<span>workflows · auth</span> temporal · keycloak','<span>runtime</span> docker · ec2 · eks']
   },
   {
-    env:'cloud infrastructure · enterprise',
-    nm:'Enterprise Applications & Microservices',
-    ds:'Multi-environment delivery across development, QA, staging and production — the unglamorous backbone. Environment standardisation, release management, DevSecOps gates in the pipeline, and production support when something needs a person rather than a policy.',
-    sig:['<span>environments</span> dev · qa · stage · prod','<span>gates</span> trivy · gitleaks · sonarqube','<span>config</span> ansible · terraform','<span class="g">state</span> <span class="g">running</span>']
+    env:'application delivery · environments',
+    nm:'Applications & Environments',
+    ds:'Nx-based web applications, APIs and middleware services deployed to Linux EC2 instances, with web builds served through Nginx. Releases move across development, QA, staging and production.',
+    sig:['<span>apps</span> nx · web · api · middleware','<span>hosts</span> linux ec2 · nginx','<span>environments</span> dev · qa · stage · prod','<span class="g">state</span> <span class="g">running</span>']
   }
 ];
 
